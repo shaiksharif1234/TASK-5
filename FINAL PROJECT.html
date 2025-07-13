@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Your Electronics Destination</title>
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .cart-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            position: relative;
+        }
+
+        .cart-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background: white;
+            color: #f5576c;
+            transform: translateY(-2px);
+        }
+
+        /* Product Grid */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #999;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-image.loading {
+            background: #f0f0f0;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background: #5a6fd8;
+        }
+
+        .add-to-cart:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+            margin-left: 15px;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .quantity {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #218838;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+
+            .nav-links {
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .filters {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+                padding: 20px;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 15px;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles for keyboard navigation */
+        button:focus,
+        input:focus,
+        a:focus {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">TechStore</a>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products..." aria-label="Search products">
+                <button class="search-btn" onclick="searchProducts()" aria-label="Search">🔍</button>
+            </div>
+            <div class="header-actions">
+                <button class="cart-btn" onclick="toggleCart()" aria-label="Shopping cart">
+                    🛒 Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </div>
+        <nav>
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <h1>Welcome to TechStore</h1>
+            <p>Discover the latest in technology and electronics</p>
+            <a href="#products" class="cta-btn">Shop Now</a>
+        </section>
+
+        <section id="products">
+            <h2 class="section-title">Our Products</h2>
+            
+            <div class="filters">
+                <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+                <button class="filter-btn" onclick="filterProducts('smartphones')">Smartphones</button>
+                <button class="filter-btn" onclick="filterProducts('laptops')">Laptops</button>
+                <button class="filter-btn" onclick="filterProducts('accessories')">Accessories</button>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                Loading products...
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Shopping Cart</h2>
+                <button class="close-btn" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+            </div>
+            <div id="cartItems">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="cart-total" id="cartTotal">
+                Total: $0.00
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#support">Support</a>
+                <a href="#about">About Us</a>
+            </div>
+            <p>&copy; 2024 TechStore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let products = [];
+        let cart = [];
+        let currentFilter = 'all';
+
+        // Sample product data with real images and Indian prices
+        const sampleProducts = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro 128GB",
+                price: 134900,
+                category: "smartphones",
+                description: "Latest iPhone with A17 Pro chip and titanium design - Natural Titanium",
+                image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-bluetitanium-select?wid=400&hei=300&fmt=jpeg&qlt=90&.v=1692895703429",
+                fallback: "📱"
+            },
+            {
+                id: 2,
+                name: "MacBook Pro 16\" M3 Pro",
+                price: 249900,
+                category: "laptops",
+                description: "16-inch MacBook Pro with M3 Pro chip, 18GB RAM, 512GB SSD - Space Black",
+                image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-spacegray-select-202301?wid=400&hei=300&fmt=jpeg&qlt=90&.v=1671578973343",
+                fallback: "💻"
+            },
+            {
+                id: 3,
+                name: "AirPods Pro (2nd Gen)",
+                price: 26900,
+                category: "accessories",
+                description: "AirPods Pro with Active Noise Cancellation and MagSafe Charging Case",
+                image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=400&hei=300&fmt=jpeg&qlt=90&.v=1660803972361",
+                fallback: "🎧"
+            },
+            {
+                id: 4,
+                name: "Samsung Galaxy S24 Ultra",
+                price: 129999,
+                category: "smartphones",
+                description: "Galaxy S24 Ultra with S Pen, 256GB storage, Titanium Gray",
+                image: "https://images.samsung.com/is/image/samsung/p6pim/in/2401/gallery/in-galaxy-s24-ultra-s928-sm-s928bzkcins-thumb-539573059?$480_480_PNG$",
+                fallback: "📱"
+            },
+            {
+                id: 5,
+                name: "Dell XPS 13 Plus",
+                price: 159990,
+                category: "laptops",
+                description: "Dell XPS 13 Plus with 12th Gen Intel Core i7, 16GB RAM, 512GB SSD",
+                image: "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-13-9320/media-gallery/xs9320-cnb-00055lf110-gy.psd?fmt=png-alpha&pscan=auto&scl=1&hei=300&wid=400&qlt=100,1&resMode=sharp2&size=400,300&chrss=full",
+                fallback: "💻"
+            },
+            {
+                id: 6,
+                name: "Apple Magic Mouse",
+                price: 7900,
+                category: "accessories",
+                description: "Magic Mouse with Multi-Touch surface and rechargeable battery",
+                image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MK2E3?wid=400&hei=300&fmt=jpeg&qlt=90&.v=1626468075000",
+                fallback: "🖱️"
+            },
+            {
+                id: 7,
+                name: "iPad Pro 12.9\" M2",
+                price: 112900,
+                category: "accessories",
+                description: "iPad Pro 12.9-inch with M2 chip, 256GB Wi-Fi, Space Gray",
+                image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-12-select-wifi-spacegray-202210?wid=400&hei=300&fmt=jpeg&qlt=90&.v=1664411207213",
+                fallback: "📱"
+            },
+            {
+                id: 8,
+                name: "Microsoft Surface Laptop 5",
+                price: 149999,
+                category: "laptops",
+                description: "Surface Laptop 5 with Intel Core i7, 16GB RAM, 512GB SSD, Platinum",
+                image: "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RW15tL?ver=ed2c&q=90&m=6&h=300&w=400&b=%23FFFFFFFF&f=jpg&o=f&p=140&aim=true",
+                fallback: "💻"
+            },
+            {
+                id: 9,
+                name: "Sony WH-1000XM5",
+                price: 29990,
+                category: "accessories",
+                description: "Industry-leading noise canceling headphones with 30-hour battery life",
+                image: "https://www.sony.co.in/image/5d02da5df552836db894ccd9b7b5b63f?fmt=png-alpha&wid=400&hei=300",
+                fallback: "🎧"
+            },
+            {
+                id: 10,
+                name: "Google Pixel 8 Pro",
+                price: 106999,
+                category: "smartphones",
+                description: "Google Pixel 8 Pro with AI-powered camera and Magic Eraser, 256GB",
+                image: "https://lh3.googleusercontent.com/jZ8m-7b3SzKzKNKlDGxzjWlYeKwX4LkzlSJYP0mJhZJdHLJcaZjL9O_7M_U7VeY-pSNtB2Xj=w400-h300-rw",
+                fallback: "📱"
+            },
+            {
+                id: 11,
+                name: "ASUS ROG Strix G16",
+                price: 174990,
+                category: "laptops",
+                description: "Gaming laptop with Intel Core i7, NVIDIA RTX 4070, 16GB RAM, 1TB SSD",
+                image: "https://dlcdnwebimgs.asus.com/gain/A8E62648-E670-4ABA-BF7D-D6C6E49F2F9E/w400/h300",
+                fallback: "💻"
+            },
+            {
+                id: 12,
+                name: "Corsair K95 RGB Platinum",
+                price: 18999,
+                category: "accessories",
+                description: "Mechanical Gaming Keyboard with Cherry MX switches and RGB lighting",
+                image: "https://assets.corsair.com/image/upload/c_pad,q_auto,h_300,w_400/products/Gaming-Keyboards/K95-RGB-PLATINUM/K95-RGB-PLATINUM-01.webp",
+                fallback: "⌨️"
+            },
+            {
+                id: 13,
+                name: "OnePlus 12",
+                price: 64999,
+                category: "smartphones",
+                description: "OnePlus 12 with Snapdragon 8 Gen 3, 256GB storage, Silky Black",
+                image: "https://oasis.opstatics.com/content/dam/oasis/page/2023/global/products/12/kv/12-kv-black-400x300.png",
+                fallback: "📱"
+            },
+            {
+                id: 14,
+                name: "HP Spectre x360",
+                price: 139999,
+                category: "laptops",
+                description: "HP Spectre x360 2-in-1 laptop with Intel Core i7, 16GB RAM, 512GB SSD",
+                image: "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c08070542.png?imwidth=400&imdensity=1",
+                fallback: "💻"
+            },
+            {
+                id: 15,
+                name: "Logitech MX Master 3S",
+                price: 8995,
+                category: "accessories",
+                description: "Advanced wireless mouse with ultra-fast scrolling and app-specific customization",
+                image: "https://resource.logitechg.com/w_400,h_300,c_limit,q_auto,f_auto,dpr_auto/d_transparent.gif/content/dam/logitech/en/products/mice/mx-master-3s/gallery/mx-master-3s-mouse-top-view-graphite.png",
+                fallback: "🖱️"
+            }
+        ];
+
+        // Initialize the application
+        function init() {
+            showLoading();
+            // Simulate API call delay
+            setTimeout(() => {
+                products = [...sampleProducts];
+                hideLoading();
+                displayProducts(products);
+            }, 1000);
+        }
+
+        // Show loading animation
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('productGrid').style.display = 'none';
+        }
+
+        // Hide loading animation
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('productGrid').style.display = 'grid';
+        }
+
+        // Create image element with lazy loading and fallback
+        function createProductImage(product) {
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'product-image loading';
+            
+            // Create img element
+            const img = document.createElement('img');
+            img.src = product.image;
+            img.alt = product.name;
+            img.loading = 'lazy'; // Native lazy loading
+            
+            // Handle image load success
+            img.onload = function() {
+                imageContainer.classList.remove('loading');
+                imageContainer.innerHTML = '';
+                imageContainer.appendChild(img);
+            };
+            
+            // Handle image load error - show fallback emoji
+            img.onerror = function() {
+                imageContainer.classList.remove('loading');
+                imageContainer.innerHTML = `<span style="font-size: 3rem; color: #999;">${product.fallback}</span>`;
+            };
+            
+            return imageContainer;
+        }
+
+        // Display products in the grid
+        function displayProducts(productsToShow) {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = '';
+
+            productsToShow.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                // Create image with lazy loading
+                const imageContainer = createProductImage(product);
+                
+                productCard.appendChild(imageContainer);
+                
+                const productInfo = document.createElement('div');
+                productInfo.className = 'product-info';
+                productInfo.innerHTML = `
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-price">${product.price.toFixed(2)}</p>
+                    <p class="product-description">${product.description}</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})" aria-label="Add ${product.name} to cart">
+                        Add to Cart
+                    </button>
+                `;
+                
+                productCard.appendChild(productInfo);
+                productGrid.appendChild(productCard);
+            });
+        }
+
+        // Filter products by category
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update filter button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter and display products
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            displayProducts(filteredProducts);
+        }
+
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            displayProducts(filteredProducts);
+        }
+
+        // Add event listener for Enter key in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+
+        // Add product to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+
+            updateCartUI();
+            showCartNotification();
+        }
+
+        // Update cart UI elements
+        function updateCartUI() {
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = cartCount;
+            
+            if (document.getElementById('cartModal').style.display === 'block') {
+                displayCartItems();
+            }
+        }
+
+        // Show cart notification
+        function showCartNotification() {
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                cartBtn.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Toggle cart modal
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            if (modal.style.display === 'block') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'block';
+                displayCartItems();
+            }
+        }
+
+        // Display cart items
+        function displayCartItems() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Your cart is empty</p>';
+                cartTotal.textContent = 'Total: ₹0';
+                return;
+            }
+
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                
+                // Create cart item image
+                const cartItemImage = document.createElement('div');
+                cartItemImage.style.fontSize = '2rem';
+                cartItemImage.style.minWidth = '60px';
+                cartItemImage.style.textAlign = 'center';
+                
+                const cartImg = document.createElement('img');
+                cartImg.src = item.image;
+                cartImg.alt = item.name;
+                cartImg.style.width = '60px';
+                cartImg.style.height = '60px';
+                cartImg.style.objectFit = 'cover';
+                cartImg.style.borderRadius = '8px';
+                
+                cartImg.onerror = function() {
+                    cartItemImage.innerHTML = item.fallback;
+                };
+                
+                cartItemImage.appendChild(cartImg);
+                
+                cartItem.appendChild(cartItemImage);
+                
+                const cartItemInfo = document.createElement('div');
+                cartItemInfo.className = 'cart-item-info';
+                cartItemInfo.innerHTML = `
+                    <div class="cart-item-title">${item.name}</div>
+                    <div class="cart-item-price">${item.price.toFixed(2)}</div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)" aria-label="Decrease quantity">-</button>
+                        <span class="quantity">${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)" aria-label="Increase quantity">+</button>
+                        <button class="quantity-btn" onclick="removeFromCart(${item.id})" style="background: #dc3545; margin-left: 10px;" aria-label="Remove item">×</button>
+                    </div>
+                `;
+                
+                cartItem.appendChild(cartItemInfo);
+                cartItems.appendChild(cartItem);
+                total += item.price * item.quantity;
+            });
+
+            cartTotal.textContent = `Total: ${total.toFixed(2)}`;
+        }
+
+        // Update item quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        // Checkout function
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            alert(`Thank you for your purchase! Total: ₹${total.toLocaleString('en-IN')}\n\nThis is a demo checkout.`);
+            
+            // Clear cart
+            cart = [];
+            updateCartUI();
+            toggleCart();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('cartModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleCart();
+            }
+        });
+
+        // Keyboard navigation for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('cartModal').style.display === 'block') {
+                toggleCart();
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Performance optimization: Debounce search
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Apply debounce to search
+        const debouncedSearch = debounce(searchProducts, 300);
+        document.getElementById('searchInput').addEventListener('input', debouncedSearch);
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Service Worker for basic caching (commented out for demo)
+        /*
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('SW registered'))
+                .catch(error => console.log('SW registration failed'));
+        }
+        */
+    </script>
+</body>
+</html>
